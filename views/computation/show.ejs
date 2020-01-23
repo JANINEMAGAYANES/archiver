@@ -1,0 +1,105 @@
+<% include ../partials/header %>
+ <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://cdnjs.cloudfare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="/asset/bootstrap-table.min.js"></script>
+<script src="/asset/bootstrap-table-toolbar.min.js"></script>
+<script src="/asset/bootstrap-table-filter-control.min.js"></script>
+<script src="/asset/jquery-3.3.1.slim.min.js"></script>
+<script src="/asset/jspdf.min.js"></script>
+<script src="/asset/jspdf.plugin.autotable.min.js"></script>
+<script src="/asset/tableHTMLExport.js"></script> 
+<link href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" rel="stylesheet">
+
+<div class="container">
+  <h1 style="text-align: center; margin: 10px;">Final Round: <%= round %></h1>
+  <h5 style="text-align: center; margin: 10px;"> Name: All</h5>
+  <div style="width: 30%; margin: 25px auto;">
+    <div class="form-group">
+      <button class="button"> <a style="color:white; text-align: center" href="/computation/final/<%= round %>">Submit Final</a></button>
+    </div>
+  </div>
+</div>
+<br>
+<div style="margin: 30px;">
+  <div id="toolbar" class="select">
+    <i class="fab fa-js-square" id="json"></i>
+    <i class="fas fa-file-pdf" id="pdf"></i>
+    <i class="fas fa-file-csv" id="csv"></i>
+  </div>
+  <table id="table" data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true"
+    data-toolbar="#toolbar" data-advanced-search="true" data-id-table="advancedTable" data-filter-control="true"
+    data-show-toggle="true" data-show-fullscreen="true" data-show-pagination-switch="true" data-filter-show-clear="true"
+    data-click-to-select="true" data-page-list="[10,20,30,40, All]">
+    <thead>
+      <tr>
+       
+        <th data-field="round" data-sortable="true" data-filter-control="input" class="small">Round</th>
+        <th data-field="report" data-sortable="true" data-filter-control="input" class="small">Date</th>
+        <th data-field="name" data-sortable="true" data-filter-control="input" class="small">Name</th>
+        <th data-field="category" data-sortable="true" data-filter-control="input" class="small">Category</th>
+        <th data-field="id" data-sortable="true" data-filter-control="input" class="small">Tx ID</th>
+        <th data-field="nominated" data-sortable="true" data-filter-control="input" class="small">Nominated</th>
+        <th data-field="initial" data-sortable="true" data-filter-control="select" class="small">Initial</th>
+        <th data-field="final" data-sortable="true" data-filter-control="select" class="small">Final</th>
+        <th data-field="url" data-sortable="true" data-filter-control="input" class="small">URL</th>
+        <th data-field="domain" data-sortable="true" data-filter-control="input" class="small">Domain</th>
+        <th data-field="remarks" data-sortable="true" data-filter-control="input" class="small">Remarks</th>
+        <th data-field="action" data-sortable="true" data-filter-control="input" class="small">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% transactions.forEach(function(transaction){ %>
+      <tr>
+  
+        <form action="/computation/admin/arweave/<%=transaction._id%>?_method=PUT" method="POST">
+        <div style="  display: flex; align-items: flex-start; align-content: right;">
+        <td class="small"><input name="transaction[round]" style="width:90%; border: none; padding:3px" value="<%= transaction.round%>"></td>
+        <td class="small"><input name="transaction[report]" style="width:90%; border: none; padding:3px" value="<%= transaction.report%>"><%= transaction.report%></a></td>
+        <td class="small"><input name="transaction[name]" style="width:90%; border: none; padding:3px" value="<%= transaction.name%>"><%= transaction.name%></a></td>
+        <td class="small"><input name="transaction[category]" style="width:90%; border: none; padding:3px" value="<%= transaction.category%>"><%= transaction.category%></td>
+        <td class="small"><a style="color: BLACK;" href="https:arweave.net/<%= transaction.id%>" target="_blank"><%= transaction.id%></a></td>
+        <td class="small"><input name="transaction[nominated]" style="width:90%; border: none; padding:3px" value="<%= transaction.nominated%>"><%= transaction.nominated%></td>
+      
+        <td class="small"><input name="transaction[initial]" style="width:90%; border: none; padding:3px" value="<%= transaction.initial%>"><%= transaction.initial%></td>
+
+        <td class="small"><input name="transaction[final]" style="width:90%; border: none; padding:3px" value="<%= transaction.final%>"><%= transaction.final%></td>
+  
+        <td class="small"><%= transaction.url %></td>
+        <td class="small"><%= transaction.domain %></td>
+
+        <td class="small"><input name="transaction[remarks]" style="width:90%; border: none; padding:3px" value="<%=transaction.remarks%>"></td>
+        <!-- <td class="small"><a style="color: BLACK;" href="/computation/admin/arweave/<%= transaction._id%>/edit"><i
+          class="fas fa-user-edit"></i></a></td> -->
+        <td><button type='submit' style=" width: 90%; margin-top: 3px;margin-right: 100px;">Submit</button></td> 
+
+      </tr>
+    </form>
+      <% }); %>
+    
+  </table>
+</div>
+
+
+  <script>
+    $("#json").on("click", function () {
+      $("#table").tableHTMLExport({
+        type: 'json',
+        filename: 'sample.json'
+      })
+    })
+    $("#pdf").on("click", function () {
+      $("#table").tableHTMLExport({
+        type: 'pdf',
+        filename: 'sample.pdf'
+      })
+    })
+    $("#csv").on("click", function () {
+      $("#table").tableHTMLExport({
+        type: 'csv',
+        filename: 'sample.csv'
+      })
+    })
+  </script>
+
+  <% include ../partials/footer%>

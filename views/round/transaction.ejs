@@ -1,0 +1,74 @@
+<% include ../partials/header %>
+
+<div style="background: white; margin: 30px;">
+    <div id="toolbar" class="select">
+        <i class="fab fa-js-square" id="json"></i>
+        <i class="fas fa-file-pdf" id="pdf"></i>
+        <i class="fas fa-file-csv" id="csv"></i>
+    </div>
+    <table id="table" data-toggle="table" data-pagination="true" data-search="true" data-show-columns="true"
+    data-toolbar="#toolbar" data-advanced-search="true" data-id-table="advancedTable" data-filter-control="true"
+    data-show-toggle="true" data-show-fullscreen="true" data-show-pagination-switch="true" data-filter-show-clear="true"
+    data-click-to-select="true" data-page-list="[10,20,30,40, All]">
+    <thead>
+    
+        <tr>
+       
+        <th data-field="round" data-sortable="true" data-filter-control="select" class="small">Round</th> 
+        <th data-field="name" data-sortable="true" data-filter-control="input" class="small" class="small">Name</th>
+        <th data-field="category" data-sortable="true" data-filter-control="input" class="small">Category</th> 
+        <th data-field="id" data-sortable="true" data-filter-control="input" class="small">Transaction ID</th> 
+        <th data-field="nominated" data-sortable="true" data-filter-control="input" class="small">Nominated</th> 
+        <th data-field="url" data-sortable="true" data-filter-control="input" class="small"class="small">URL</th>
+        <th data-field="domain" data-sortable="true" data-filter-control="input" class="small">Domain</th>
+        <th data-field="final" data-sortable="true" data-filter-control="input" class="small">Final</th> 
+                <th data-field="remarks" data-sortable="true" data-filter-control="input" class="small">Remarks</th> 
+
+        </tr>
+    </thead>
+    <tbody>
+        <% transactions.forEach(function(transaction){%>
+        <tr> 
+              
+             
+                    <td class="small"><%= transaction.round%> </td>
+                    <td class="small"><%= transaction.name%></td>
+                    <td class="small"><%= transaction.category%></td>
+                    <td class="small"><%= transaction.id%></td>
+                    <td class="small"><%= transaction.nominated%></td>
+                    <td class="small"><%= transaction.url%></td>
+                    <td class="small"><%= transaction.domain%></td>
+                    <td class="small"><%= transaction.final%></td>
+                    <td class="small"><%= transaction.remarks%></td>  
+        </tr>    
+        <% }); %>
+    </div>
+
+</div>
+<script src="asset/jspdf.min.js"></script>
+<script src="asset/jspdf.plugin.autotable.min.js"></script>
+<script src="asset/tableHTMLExport.js"></script>
+<script src="asset/jquery-3.3.1.slim.min.js"></script>
+<script>
+    $("#json").on("click", function () {
+        $("#table").tableHTMLExport({
+            type: 'json',
+            filename: 'sample.json'
+        })
+    })
+    $("#pdf").on("click", function () {
+        $("#table").tableHTMLExport({
+            type: 'pdf',
+            filename: 'sample.pdf'
+        })
+    })
+    $("#csv").on("click", function () {
+        $("#table").tableHTMLExport({
+            type: 'csv',
+            filename: 'sample.csv'
+        })
+    })
+</script>  
+
+   
+<% include ../partials/footer%>

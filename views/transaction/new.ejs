@@ -1,0 +1,157 @@
+<% include ../partials/header %>
+
+<div class="container">
+        <div class="form-group-row">
+                <h1 style="text-align: center; margin: 30px;">Create an Entry</h1>
+                <div style="width: 30%; margin: 25px auto;">
+
+                        <form action="/transaction" method="POST">
+                                <div class="form-group">
+                                        Name: <input class="form-control" type="text" name="name" value="<%=username%>"
+                                                readonly>
+                                </div>
+
+                                <div class="form-group">
+                                        <input class="form-control" type="text" name="round" value="0" readonly hidden>
+                                </div>
+                                <div class="form-group">
+                                        <input class="form-control" type="text" name="email" value="<%=email%>" readonly
+                                                hidden>
+                                </div>
+                                <div class="form-group">
+                                        Category:
+                                        <br>
+                                        <select name="category">
+
+                                                <option value="general">General</option>
+                                                <option value="brexit">Brexit</option>
+                                                <option value="syria">Syria</option>
+                                                <option value="hk">HK</option>
+                                                <option value="oth">Others</option>
+                                        </select>
+                                </div>
+                                <div class="form-group">
+                                        <input class="form-control" type="text" name="initial" value="Needs Review"
+                                                readonly hidden>
+                                </div>
+                                <div class="form-group">
+                                        <input class="form-control" type="text" name="remarks" value="For Submission"
+                                                readonly hidden>
+                                </div>
+
+                                <div class="form-group">
+                                        Nominated:
+                                        <br>
+                                        <input type="radio" name="nominated" value="Yes">Yes
+                                        <br>
+                                        <input type="radio" name="nominated" value="No" default>No
+                                </div>
+
+                                Transaction ID:
+
+
+                                <ul class="form-group" id="items">
+                                        <div>
+                                                <input class="form-control" type="text" name="id" placeholder=""
+                                                        size=43>
+                                                <%= warning %>
+
+
+
+
+                                        </div>
+
+                                </ul>
+
+
+                                <div class="form-group">
+                                        <button class="button" type="submit">Submit</button>
+                                </div>
+                        </form>
+
+                        <div class="form-group">
+                                <form id="addForm">
+
+                                        <button type="submit" class="button">Add Transactions
+
+                                </form>
+                        </div>
+                        <a href="/transaction" style="color: black">Go Back</a>
+                </div>
+
+        </div>
+
+
+</div>
+</div>
+</div>
+<script>
+        var form = document.getElementById('addForm');
+        var itemList = document.getElementById('items');
+        var filter = document.getElementById('filter');
+
+        // Form submit event
+        form.addEventListener('submit', addItem);
+        // Delete event
+        itemList.addEventListener('click', removeItem);
+        // Filter event
+        filter.addEventListener('keyup', filterItems);
+
+        // Add item
+        function addItem(e) {
+                e.preventDefault();
+
+                //newInput.type = 'text'
+                // Create new li element
+                var input = document.createElement('input');
+                // Add class
+                input.className = 'form-control';
+                input.type = 'text';
+                input.name = 'id'
+                // Add text node with input value
+                //li.appendChild(document.createTextNode(newInput));
+
+                // Create del button element
+                var deleteBtn = document.createElement('button');
+
+                // Add classes to del button
+                deleteBtn.className = 'btn btn-danger btn-sm float-right delete';
+
+                // Append text node
+                deleteBtn.appendChild(document.createTextNode('X'));
+
+                // Append button to li
+                input.appendChild(deleteBtn);
+
+                // Append li to list
+                itemList.appendChild(input);
+        }
+
+        // Remove item
+        function removeItem(e) {
+                if (e.target.classList.contains('delete')) {
+                        if (confirm('Are You Sure?')) {
+                                var input = e.target.parentElement;
+                                itemList.removeChild(input);
+                        }
+                }
+        }
+
+        // Filter Items
+        function filterItems(e) {
+                // convert text to lowercase
+                var text = e.target.value.toLowerCase();
+                // Get lis
+                var items = itemList.getElementsByTagName('li');
+                // Convert to an array
+                Array.from(items).forEach(function (item) {
+                        var itemName = item.firstChild.textContent;
+                        if (itemName.toLowerCase().indexOf(text) != -1) {
+                                item.style.display = 'block';
+                        } else {
+                                item.style.display = 'none';
+                        }
+                });
+        }
+</script>
+<% include ../partials/footer %>

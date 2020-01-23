@@ -1,0 +1,75 @@
+<% include ./partials/header %>
+<script src="https://unpkg.com/arweave/bundles/web.bundle.js"></script>
+
+<br>
+<br>
+
+<div class="container">
+    <div class="form-group-row">
+        <h1 style="text-align: center; margin: 30px;">Check a URL</h1>
+
+        <h5 style="text-align: center; margin: 30px;" id="message"></h5>
+
+        <div style="width: 30%; margin: 25px auto;">
+
+           
+            <div class="form-group">
+                <input class="form-control" type="text" id="url" name="link" size="43" placeholder="http://example.com/page.html" required>
+            </div>
+
+            <div class="form-group">
+                <button class="button" id="submitbutton">Check</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+
+const instance = Arweave.init({
+    host: 'arweave.net',
+    port: 443,
+    logging: true,
+    protocol: 'https'
+});
+
+async function checkurl(url){
+    const txids = await instance.arql(
+    {
+        "op": "equals",
+        "expr1": "page:url",
+        "expr2": url 
+    })
+    return txids.length > 0 
+
+}
+
+document.getElementById("submitbutton").addEventListener("click", async () =>{
+    var url = document.getElementById("url").value 
+    const result =  await checkurl(url)
+    document.getElementById("message").innerText = result ? "This link has been archived before, so it is not eligible for rewards." : "This URL has not been archived before. Remember to carefully check that this page meets the rules, including those relating to copyright."
+})
+
+</script>
+<!-- <div class="container">
+        <h1 style="text-align: center; margin: 30px;">Welcome to Arweave</h1>
+        <h5 style="text-align: center; margin: 30px;">Check a URL</h5>
+        <h6  style="text-align: center; margin: 30px;">
+        <% if(message) {%>  
+        <%=message%>
+        <% }%> 
+        </h6>    
+        <div style="width: 30%; margin: 25px auto;">
+        <form action="/" method="GET" class="form">
+            <div class="form-group">
+                <input type="text" name="search" placeholder="Search..." class="form-control">
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Search" class="button">
+            </div>
+            </div>
+        </form>
+        </div>
+</div> -->
+
+<% include partials/footer %>

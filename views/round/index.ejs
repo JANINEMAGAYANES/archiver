@@ -1,0 +1,282 @@
+<% include ../partials/header %>
+<script src="/public/index.js"></script>
+<!-- <ul>
+    <li style="display:inline">
+        <div class="container-four">
+            <table>
+                <tr>
+                    <td>Round:</td>
+                    <td><%=reward.round%></td>
+                </tr>
+                <tr>
+                    <td>Name:</td>
+                    <td><%=name %></td>
+                </tr>
+                <tr>
+                    <td>Total Archive: </td>
+                    <td><%=reward.archive %></td>
+                </tr>
+                <tr>
+                    <td>General Topic: </td>
+                    <td class><%=reward.gen %></td>
+                </tr>
+                <tr>
+                    <td>General Topic Percent: </td>
+                    <td class><%=reward.percentgen %></td>
+                </tr>
+                <tr>
+                    <td>Total General Points:</td>
+                    <td><%=reward.netgen %></td>
+                </tr>
+                <tr>
+                    <td>Special Brexit: </td>
+                    <td><%=reward.brex %></td>
+                </tr>
+                <tr>
+                    <td>Special Brexit Percent: </td>
+                    <td><%=reward.percentbrex%></td>
+                </tr>
+                <tr>
+                    <td>Total Brexit Points:</td>
+                    <td><%=reward.netbrex%></td>
+                </tr>
+                <tr>
+                    <td>Special HK: </td>
+                    <td><%=reward.hk %></td>
+                </tr>
+                <tr>
+                    <td>Special HK Percent: </td>
+                    <td><%=reward.percenthk%></td>
+                </tr>
+                <tr>
+                    <td>Total HK Points:</td>
+                    <td><%=reward.nethk%></td>
+                </tr>
+                <tr>
+                    <td>Special Syria: </td>
+                    <td><%=reward.syr%></td>
+                </tr>
+                <tr>
+                    <td>Special Syria Percent: </td>
+                    <td><%=reward.percentsyr%></td>
+                </tr>
+                <tr>
+                    <td>Total Syria Points: </td>
+                    <td><%=reward.netsyr%></td>
+                </tr>
+                <tr>
+                    <td>Total Oth: </td>
+                    <td><%=reward.oth%></td>
+                </tr>
+                <tr>
+                    <td>Total Oth Percent: </td>
+                    <td><%=reward.percentoth%></td>
+                </tr>
+                <tr>
+                    <td>Total Oth Points: </td>
+                    <td><%=reward.netoth%></td>
+                </tr>
+                <tr>
+                    <td>Gross Total: </td>
+                    <td><%=reward.grosstotal%></td>
+                </tr>
+                <tr>
+                    <td>Net Total: </td>
+                    <td><%=reward.nettotal%></td>
+                </tr>
+                <tr>
+                    <td>Whitelisted </td>
+                    <td><%=reward.whitelisted%></td>
+                </tr>
+                <tr>
+                    <td>Blacklisted </td>
+                    <td><%=reward.black%></td>
+                </tr>
+                <tr>
+                    <td>Penalty </td>
+                    <td><%=reward.penalty%></td>
+                </tr>
+                <tr>
+                    <td>Void </td>
+                    <td><%=reward.myvoid%></td>
+                </tr>
+                <tr>
+                    <td>Referral</td>
+                    <td><%=reward.referral%></td>
+                </tr>
+                <tr>
+                    <td>Overall Percent</td>
+                    <td><%=reward.overallpercent%></td>
+                </tr>
+                <tr>
+                    <td>Rewards</td>
+                    <td><%=reward.rewards%></td>
+                </tr>
+                <tr>
+                    <td>Prize</td>
+                    <td><%=reward.prize%></td>
+                </tr>
+                <tr>
+                    <td>Pot</td>
+                    <td><%=reward.pot%></td>
+                </tr>
+                <tr>
+                    <td>Total Amount</td>
+                    <td><%=reward.totalamount%></td>
+                </tr>
+                <tr>
+                    <td>Arweave</td>
+                    <td><%=reward.ar%></td>
+                </tr>
+                <tr>
+                    <td>Remarks</td>
+                    <td><%=reward.remarks%></td>
+                </tr>
+            </table>
+            <br>
+            <br>
+            <a class="button" style="padding: 10px" href="/profile/<%=name %>/summary/<%=reward.round%>" <h1>
+                View Summary</h1>
+            </a>
+        </div>
+    </li>
+
+    <li style="display:inline">
+        <div class="container-five">
+            <table>
+                <% transaction.forEach(function(transaction) {%>
+                <tr>
+                    <td class="small"><%=transaction.url%> </td>
+                    <td class="small"><%=transaction.whitelisted%> </td>
+                </tr>
+                <% })%>
+                <table>
+        </div>
+    </li>
+</ul> -->
+
+<div style="width: 30%; margin-left: 10%; margin-right: 10%; float: left;">
+    <ul>
+        <li style="list-style-type: none;">
+            <div class="form-group">
+                1. Round: <input class="form-control" type="text" name="round" value="<%=reward.round%>" readonly>
+            </div>
+            <div class="form-group">
+                2. Name: <input class="form-control" type="text" name="name" value="<%=reward.name%>" readonly>
+            </div>
+            <div class="form-group">
+                3. Total Archive: <input class="form-control" type="text" name="totalarchive"
+                    value="<%= reward.archive%>" readonly>
+            </div>
+            <div class="form-group">
+                4. General Point: <input class="form-control" type="number" name="gen" value="<%= reward.gen%>" readonly>
+            </div>
+            <div class="form-group">
+            
+                5. General Percent: <input class="form-control" type="number" name="percentgen"
+                    value="<%= reward.percentgen%>" readonly>
+            </div>
+            <div class="form-group">
+                6. Special Brexit <input class="form-control" type="number" name="brex" value="<%= reward.brex%>" readonly>
+            </div>
+            <div class="form-group">
+              
+                7. Special Brexit Point: <input class="form-control" type="number" name="pointbrex"
+                    value="<%= reward.pointbrex%>" readonly>
+            </div>
+            <div class="form-group">
+                8. Special Brexit Percent: <input class="form-control" type="number" name="percentbrex"
+                    value="<%= reward.percentbrex%>" readonly>
+            </div>
+            <div class="form-group">
+                9. Special HK : <input class="form-control" type="number" name="hk" value="<%= reward.hk%>" readonly>
+            </div>
+            <div class="form-group">
+                10. Special HK Point: <input class="form-control" type="number" name="pointhk" value="<%= reward.pointhk%>" readonly>
+            </div>
+            <div class="form-group">
+                11. Special HK Percent: <input class="form-control" type="number" name="percenthk"
+                    value="<%= reward.percenthk%>" readonly>
+            </div>
+            <div class="form-group">
+                12. Special Syria : <input class="form-control" type="number" name="syr" value="<%= reward.syr%>" readonly>
+            </div>
+            <div class="form-group">
+                13. Special Syria Point: <input class="form-control" type="number" name="pointsyr"
+                    value="<%= reward.pointsyr%>" readonly>
+            </div>
+            <div class="form-group">
+                14. Special Syria Percent: <input class="form-control" type="number" name="percentsyr"
+                    value="<%= reward.percentsyr%>" readonly>
+            </div>
+            <div class="form-group">
+                15. Special Others: <input class="form-control" type="number" name="oth" value="<%= reward.oth%>" readonly>
+            </div>
+            
+</div>
+</li>
+<li style="list-style-type: none;">
+    <div style="width: 30%; float: left">
+        <div class="form-group">
+            16. Special Other Point: <input class="form-control" type="number" name="pointoth" value="<%= reward.pointoth%>" readonly>
+        </div>
+        <div class="form-group">
+            17. Special Other Percent: <input class="form-control" type="number" name="percentoth"
+                value="reward.percentoth" readonly>
+        </div>
+        <div class="form-group">
+            18. Whitelisted: <input class="form-control" type="number" name="white" value="<%= reward.white%>" readonly>
+        </div>
+        <div class="form-group">
+            19. Page Acceptable: <input class="form-control" type="number" name="acceptable"
+                value="<%= reward.acceptable%>" readonly>
+        <div class="form-group">
+            20. Page Unacceptable: <input class="form-control" type="number" name="unacceptable"
+                value="<%= reward.unacceptable%>" readonly>
+            </div>
+        <div class="form-group">
+            21. Blacklisted: <input class="form-control" type="number" name="black" value="<%= reward.black%>" readonly>
+        </div>
+        <div class="form-group">
+            
+            22. Penalty: <input class="form-control" type="number" name="penalty" value="<%= reward.penalty%>" readonly>
+        </div>
+        <div class="form-group">
+            23. Void: <input class="form-control" type="number" name="myvoid" value="<%= reward.myvoid%>" readonly>
+        </div>
+        
+        <div class="form-group">
+            24. Gross Total Point: <input class="form-control" type="number" name="grosstotal" value="<%= reward.grosstotal%>" readonly>
+        </div>
+        <div class="form-group">
+            25. Net Total Point: <input class="form-control" type="number" name="nettotal" value="<%= reward.nettotal%>" readonly>
+        </div>
+        <div class="form-group">
+            26. Unique Domain: <input class="form-control" type="number" name="uniquedom"
+                value="<%= reward.uniquedom%>" readonly>
+        </div>
+        <div class="form-group">
+            27. Prize: <input class="form-control" type="number" name="prize"
+                value="<%= reward.prize%>" readonly>
+        </div> <div class="form-group">
+            28. Referral : <input class="form-control" type="number" name="referral"
+                value="<%= reward.referral%>" readonly>
+        </div>
+        <div class="form-group">
+            29. Rewards : <input class="form-control" type="number" name="rewards"
+                value="<%= reward.rewards%>" readonly>
+        </div>
+
+        <div class="form-group">
+            30. Total Amount : <input class="form-control" type="number" name="totalamount"
+                value="<%= reward.totalamount%>" readonly>
+        </div>
+        <a class="button" style="padding: 10px" href="/profile/<%=name %>/summary/<%=reward.round%>" <h1>
+            View Summary</h1>
+        </a>
+</li>
+</div>
+</ul>
+
+
+<% include ../partials/footer %>

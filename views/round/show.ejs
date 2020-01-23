@@ -1,0 +1,21 @@
+<% include ../partials/header %>
+<h1 style="text-align: center; margin: 30px;">Your Transactions</h1>
+<div class="container">
+    <table>
+        <tr>
+            <td class="small">Round</td>
+            <td class="small">Category</td>
+            <td class="small">Link</td>
+            <td class="small">Status</td>
+        </tr>
+
+        <% transaction.forEach(function(transaction) {%>
+        <tr>
+            <td class="small"><%=transaction.round%> </td>
+            <td class="small"><%=transaction.category%> </td>
+            <td class="small"><%=transaction.url%> </td>
+            <td class="small"><%=transaction.whitelisted%> </td>
+        </tr>
+        <% })%>
+        <table>
+</div>

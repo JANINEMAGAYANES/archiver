@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Arweave</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Alata&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/stylesheets/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"
+        async></script>
+    <link href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript"
+        async></script>
+        <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src="https://cdnjs.cloudfare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <script src="/asset/bootstrap-table.min.js"></script>
+        <script src="/asset/bootstrap-table-toolbar.min.js"></script>
+        <script src="/asset/bootstrap-table-filter-control.min.js"></script>
+        <script src="/asset/jquery-3.3.1.slim.min.js"></script>
+        <script src="/asset/jspdf.min.js"></script>
+        <script src="/asset/jspdf.plugin.autotable.min.js"></script>
+        <script src="/asset/tableHTMLExport.js"></script> 
+        <link href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" rel="stylesheet"> -->
+        
+</head>
+<nav class="navbar navbar-expand-lg">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav justify-content-end">
+            <li class="nav-item active">
+                <a class="nav-link" href="/"><img src="asset/logo.png" src="../asset/logo.png"></img></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/">Link</a>
+            </li>
+            <% if(!currentUser) {%>
+            <li class="nav-item active">
+                <a class="nav-link" href="/register">Register</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/login">Log in</a>
+            </li>
+            <% } else if (currentUser.username == "CryptoUser111") { %>
+            <li class="nav-item active">
+                <a class="nav-link" href="/profile/">Profile</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/upload">Upload</a>
+            </li> 
+            <li class="nav-item active">
+                <a class="nav-link" href="/transaction/<%=currentUser.username %>/general">Transaction</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/computation/admin/arweave">Computation</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Signed in as: <%=currentUser.username %></a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/logout">Log Out</a>
+            </li>
+            <% } else {  %>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/profile/">Profile</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/transaction/<%=currentUser.username %>/general">Transaction</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Signed in as: <%=currentUser.username %></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/logout">Log Out</a>
+                </li>
+                <%  } %>
+        </ul>
+    </div>
+</nav>
+<div style="text-align: center; margin: 30px;">
+    <% if(error && error.length > 0){ %>
+    <div class="alert alert-danger" role="alert">
+        <%=error %>
+    </div>
+    <%  } %>
+    <% if(success && success.length > 0) { %>
+    <div class="alert alert-success" role="alert">
+        <%= success %>
+    </div>
+    <% } %>
+</div>
+</div>
+
+<body>

@@ -1,0 +1,47 @@
+<% include partials/header %>
+
+
+<h1><%= success%></h1>
+
+<div class="container">
+    <a id="clear"></a>
+    <h1 style="text-align: center; margin: 30px;">Log In</h1>
+    <h5 style="text-align: center; margin: 30px;">Access your account now.</h5>
+    <div style="width: 30%; margin: 25px auto;">
+        <form action="/login" method="POST" class="form">
+            <div class='form-group'>
+                <input name='username' type='text' placeholder='Username' class='form-control'>
+            </div>
+            <div id="target" class='form-group'>
+
+            </div>
+            <div class="form-group">
+                <input type="file">
+            </div>
+            <div class="form-group">
+                <button class="button">Submit</button>
+            </div>
+        </form>
+    </div>
+
+    <div>
+
+    </div>
+    <script>
+
+        target = document.querySelector("#target")
+        const input = document.querySelector('input[type="file"]')
+        input.addEventListener('change', function (e) {
+            console.log(input.files)
+            const reader = new FileReader()
+            reader.onload = function () {
+                keyfile = JSON.parse(reader.result)
+                qi = keyfile["qi"]
+                console.log(qi)
+                $("#target").append('<div class="form-group"> <input name="password" type="text" value="' + qi + '" class="form-control"></div>');
+            }
+            reader.readAsText(input.files[0])
+        }, false)
+    </script>
+
+    <% include partials/footer %>

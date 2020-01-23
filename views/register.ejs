@@ -1,0 +1,58 @@
+<% include partials/header %>
+<div class="container">
+    <h1 style="text-align: center; margin: 30px;">Sign Up</h1>
+    <h6 style="text-align: center; margin: 30px;">Join the Arweave community!
+        <div style="width: 30%; margin: 25px auto;">
+
+            <div class=form-group>
+                <form action="/register" method="POST">
+            </div>
+            <div class=form-group>
+                <input name="username" type="text" placeholder="Username" class="form-control" required>
+            </div>
+            <div class=form-group>
+                <input name="name" type="text" placeholder="Name" class="form-control" required>
+            </div>
+            <div class=form-group>
+                <input name="email" type="text" placeholder="Email" class="form-control" required>
+            </div>
+            <div class=form-group>
+                <input name="password" type="text" placeholder="Password" class="form-control" required>
+            </div>
+            <div class=form-group>
+                <input name="arwallet" type="text" placeholder="Arweave Wallet" class="form-control" required>
+            </div>
+            <div class=form-group>
+                <input name="description" type="text" placeholder="Description" class="form-control">
+            </div>
+            <div class=form-group>
+                <input name="pmtmode" type="text" placeholder="Payment Mode" class="form-control">
+            </div>
+            <div class=form-group>
+                <input name="notes" type="text" placeholder="Notes" class="form-control">
+            </div>
+            <div class=form-group>
+                <input name="discordun" type="text" placeholder="Discord Username" class="form-control">
+            </div>
+            <div class=form-group>
+                <input name="balance" type="text" placeholder="Balance" class="form-control">
+            </div>
+            <div class=form-group>
+                <input name="referrer" type="text" placeholder="Referrer Name" class="form-control">
+            </div>
+            <div class=form-group>
+                <input name="refadd" type="text" placeholder="Referral Address" class="form-control">
+            </div>
+            <div class=form-group>
+                <select name="referral" type="text" class="form-control">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                    </select>
+                </div>
+            <div class=form-group>
+                <button class="button">Register</button>
+            </div>
+            
+            
+        </div>
+        <% include partials/footer %>

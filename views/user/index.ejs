@@ -1,0 +1,256 @@
+<% include ../partials/header %>
+<!-- <style>
+        td {
+
+                padding: 20px !important;
+        }
+
+        tr {
+
+                padding: 20px;
+        }
+</style>
+ <img src="https://cdn.clipart.email/66caee4423c164499586cf326c135cbe_halloween-spider-scrapbook-cut-file-cute-clipart-files-for-_432-432.png"
+                                        alt="user" width="100"> 
+<div class="container" style="width:40%; margin-top:5%">
+
+        <table style=" border-collapse: collapse;">
+                <tr style=" border:none;">
+
+                        <td>
+                                <h1>Name:</h1>
+                        </td>
+                        <td>
+                                <h6><%= user.username%></h6>
+                        </td>
+
+</div>
+</div>
+</tr>
+<div style="  display: flex;
+                align-items: flex-start; align-content: right;">
+        <tr>
+                <td>
+                        <h1>Round:</h1>
+                </td>
+                <td>
+                        <form action="/profile/<%= user.username%>/" method="GET">
+                                <select name="round">
+                                        <%rewards.forEach(function(reward){%>
+                                        <option value="<%=reward.round%>">
+                                                <%=reward.round%></option>
+                                        <%})%> <input style="margin-left: 10px; border-radius: 5px" type="submit"
+                                                value="Search">
+                </td>
+        </tr>
+        <tr>
+                <td>
+                        <h1>Transactions:</h1>
+                </td>
+                <td> <a style="color: gray" href="/profile/<%=user.username%>/transactions">
+                                <h6>View
+                                        All</h6>
+                        </a> </td>
+
+
+        </tr>
+        <tr>
+                <td>
+                        <h1>Email:</h1>
+                </td>
+                <td>
+                        <h6><%= user.email %></h6>
+                </td>
+        </tr>
+        </tr>
+        <tr>
+                <td>
+                        <h1>Balance:</h1>
+                </td>
+                <td>
+                        <h6><%= parseFloat(user.balance).toFixed(2) %></h6>
+                </td>
+        </tr> -->
+        <!-- <ul>
+        <div class="container-five">
+                <li style="align-items: bottom">
+                        <div class="container-four">
+                <li style="float:left">
+                        <div class="wrapper">
+                                <div class="left">
+                                        <img src="https://cdn.clipart.email/66caee4423c164499586cf326c135cbe_halloween-spider-scrapbook-cut-file-cute-clipart-files-for-_432-432.png"
+                                                alt="user" width="100">
+                                        <h6 style="text-align: center; margin: 0;"><%= user.username%></h6>
+                                        <p>Archiver</p>
+                                </div>
+                        </div>
+                </li>
+        </div>
+        </li>
+        </div>
+
+</ul>
+<ul>
+        <div class="container-three">
+                <li id="left-two">
+                        <div class="wrapper-two">
+                                <div class="right">
+                                        <div class="info">
+                                                <h3>Search Round:</h3>
+                                                <div class="info_data">
+                                                        <div class="data">
+                                                                <form action="/profile/<%= user.username%>/"
+                                                                        method="GET">
+                                                                        <select name="round">
+                                                                                <%rewards.forEach(function(reward){%>
+                                                                                <option value="<%=reward.round%>">
+                                                                                        <%=reward.round%></option>
+                                                                                <%})%>
+                                                                                <input style="margin-left: 10px; border-radius: 5px"
+                                                                                        type="submit" value="Search">
+                                                                </form>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                </div>
+                        </div>
+                </li>
+                <li id="left-two">
+                        <div class="wrapper-two">
+                                <div class="right">
+                                        <div class="info">
+                                                <h3>Transactions:</h3>
+                                                <div class="info_data">
+                                                        <div class="data">
+                                                                <a style="color: gray"
+                                                                        href="/profile/<%=user.username%>/transactions">View
+                                                                        All</a>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                </div>
+                        </div>
+                </li>
+                <li id="left-two">
+                        <div class="wrapper-two">
+                                <div class="right">
+                                        <div class="info">
+                                                <h3>Information:</h3>
+                                                <div class="info_data">
+                                                        <div class="data">
+                                                                <h4>Email:</h4>
+                                                                <p><%= user.email %></p>
+                                                        </div>
+                                                </div>
+                                                <div class="info_data">
+                                                        <div class="data">
+                                                                <h4>Balance:</h4>
+                                                                <p><%= parseFloat(user.balance).toFixed(2) %></p>
+                                                        </div>
+                                                </div>
+                                        </div>
+                                </div>
+                </li>
+</ul>
+</div>-->
+<style>
+        *{
+                margin: 0;
+                padding: 0;
+        }       
+        .container {
+                color: white;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 80vh;
+        }
+       .center .avatar img {
+               border-radius: 50%;
+               width: 140px;
+               height: 140px;
+               margin-top:5%;
+               object-fit: cover;
+               object-position: 0 -8px;
+       }
+       .center {
+               width: 55%;
+               height: 60vh;
+               text-align: center;
+               border-radius: 5px;
+       }
+       .content {
+               padding: 30px;
+       }
+
+       h1, h2, h3, p {
+               color: black
+       }
+       .content h2, p {
+               letter-spacing: 1px;
+               font-weight: lighter;
+                width: 70%;
+                margin: 10px auto;
+       }
+       content h2 {
+               font-weight: 400;
+       }
+       content h3{
+               margin-top: 20px ;
+       }
+       div.social i {
+               padding: 0 10px;
+               font-size: 30px;
+               transition: .4s;
+               color: black;
+       }
+
+       div.social i:hover {
+               color: white
+       }
+</style>
+<div class="container">
+<div class="center">
+        <div class="avatar">
+                <img src="https://www.pngkey.com/png/detail/183-1837122_cute-spider-clip-art-spider-clip-art-spider.png">
+        </div>
+        <div class="content">
+                <h1><%=user.username%></h1>
+                <h2><%=user.status%></h2>
+                <p>Rewards</p>  <form action="/profile/<%= user.username%>/"
+                        method="GET">
+                        <select name="round">
+                                <%rewards.forEach(function(reward){%>
+                                <option value="<%=reward.round%>">
+                                        <%=reward.round%></option>
+                                <%})%>
+                                <input style="margin-left: 10px; border-radius: 5px"
+                                        type="submit" value="Round">
+                </form>
+                <p>Transaction</p>  <form action="/profile/transactions/<%= user.username%>/"
+                        method="GET">
+                        <select name="round">
+                                <%rewards.forEach(function(reward){%>
+                                <option value="<%=reward.round%>">
+                                        <%=reward.round%></option>
+                                <%})%>
+                                <input style="margin-left: 10px; border-radius: 5px"
+                                        type="submit" value="Round">
+                </form>
+
+<br>
+                <!-- <h3><a style="color: gray"
+                        href="/profile/<%=user.username%>/transactions">Transactions</h3> -->
+                <!-- <div class="social">
+                        <i class="fab fa-facebook"></i>
+                        <i class="fab fa-twitter"></i>
+
+                </div> -->
+        </div>
+</div>
+
+</div>
+
+
+
+        <% include ../partials/footer %>

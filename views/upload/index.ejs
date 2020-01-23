@@ -1,0 +1,89 @@
+<% include ../partials/header %>
+<br>
+<div class="container">
+  <table>
+
+
+    <!-- <form method='get' action='/computation/archiver' style="width: 150px; padding-right: 20px;">
+    <div style="  display: flex;
+    align-items: flex-start;">
+        <tr><td><h2 style="padding-right: 20px ; align-content: right;">Transactions</h2></td>
+      <td><input name="round" class="form-control" style="width: 150px; margin-top: 3px; margin-right: 20px;"
+        placeholder="Round..." /></td>
+        <td> <button type='submit' class="button" style=" width: 150px; margin-top: 3px; margin-right: 100px;">Submit</button></td>
+    </div>
+  </tr> 
+  </form> -->
+    <form action='/upload/reward' enctype="multipart/form-data" method="POST" style="width: 600px; padding-right: 20px;">
+      <div style="  display: flex;
+align-items: flex-start; align-content: right; border: none;">
+        <tr style="border: none;">
+          <td style="border: none;">
+            <h1 style="padding-right: 20px">Reward</h1>
+          </td>
+          <td style="border: none;"><input type="file" name="myFile" ></td>
+          <td style="border: none;"><input type="submit" value="Upload" class="button"
+            style=" width: 150px; margin-top: 3px; margin-right: 100px;"></button></td>
+      </div>
+    </form>
+
+    <form action='/upload/blacklist' enctype="multipart/form-data" method="POST"  style="width: 600px; padding-right: 20px;">
+      <div style="  display: flex;
+align-items: flex-start; border: none;">
+        <tr style="border: none;">
+          <td style="border: none;">
+            <h1 style="padding-right: 20px ; align-content: right; ">Blacklist</h1>
+          </td>
+          <td style="border: none;"><input type="file" name="myFile" ></tdstyle="border:
+              none;">
+          <td style="border: none;"><input type="submit" value="Upload" class="button"
+            style=" width: 150px; margin-top: 3px; margin-right: 100px;"></button></td>
+      </div>
+      </tr>
+    </form>
+    <form action='/upload/whitelist' enctype="multipart/form-data" method="POST"  style="width: 600px; padding-right: 20px;">
+      <div style="  display: flex;
+align-items: flex-start;">
+        <tr>
+          <td style="border: none;">
+            <h1 style="padding-right: 20px ; align-content: right;">Whitelist</h3>
+          </td>
+          <td style="border: none;"><input type="file" name="myFile"></button></td>
+          <td style="border: none;"><input type="submit" value="Upload" class="button"
+            style=" width: 150px; margin-top: 3px; margin-right: 100px;"></button></td>
+
+      </div>
+      </tr>
+    </form>
+    <!-- <form method='get' action='/computation/amount' style="width: 600px; padding-right: 20px;">
+    <div style="  display: flex;
+align-items: flex-start;">
+     <tr>   <td><h2 style="padding-right: 20px ; align-content: right;">Amount</h1></td>
+     <td><input name="round" class="form-control" style="width: 150px; margin-top: 3px; margin-right: 20px;"
+        placeholder="Round..." /></td>
+      <td><button type='submit' class="button" style=" width: 150px; margin-top: 3px; margin-right: 100px;">Submit</button></td>
+    </div>
+  </tr>
+  </form>
+  <form method='get' action='/computation/summary' style="width: 150px; padding-right: 20px;">
+    <div style="  display: flex;
+  align-items: flex-start;">
+     <tr>   <td><h2 style="padding-right: 20px ; align-content: right;font-size: 30px;">Summary</h1></td>
+    <td><input name="round" class="form-control" style="width: 150px; margin-top: 3px; margin-right: 20px;"
+        placeholder="Round..." /></td>
+      <td>  <button type='submit' class="button" style=" width: 150px; margin-top: 3px; margin-right: 100px;">Submit</button></td>
+    </div>  </tr>
+  </form> -->
+    <!-- <form method='get' action='/computation/graph' style="width: 150px; padding-right: 20px;">
+   <div style="  display: flex;
+    align-items: flex-start;">
+     <tr><td> <h2 style="padding-right: 20px ; align-content: right;">Graph</h2></td>
+   <td>  <input name="round" class="form-control" style="width: 150px; margin-top: 3px; margin-right: 20px;"
+        placeholder="Round..." /></td>
+      <td><button type='submit' class="button" style=" width: 150px; margin-top: 3px; margin-right: 100px;">Submit</button></td>
+    </tr> </div>
+  </form> -->
+  </table>
+
+
+  <% include ../partials/footer %>
