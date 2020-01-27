@@ -31,7 +31,8 @@ async function verifyArWalletSignature({ public_key, signature }) {
 
 
 // This function should be run client side, and sent up to the server.
-
+// It will return an object like { public_key, signature } 
+// that can be passed to verifyArWalletSignature 
 async function generateArWalletSignature(wallet) {
   var arwallet = await arweave.wallets.jwkToAddress(wallet);
 
@@ -47,6 +48,7 @@ async function generateArWalletSignature(wallet) {
 }
 
 
+module.exports = { generateArWalletSignature, verifyArWalletSignature }
 
 // This is just a test routine, only runs if your do `node ar-wallet-auth.js`
 if (typeof require !== 'undefined' && require.main === module) {
