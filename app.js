@@ -62,6 +62,8 @@ passport.deserializeUser(passportMongooseAr.deserializeUser);
 
 app.use(function (req, res, next) {
     res.locals.currentUser = req.user;
+    console.log(req.user);
+    console.log('^^ USER IS ^^');
     res.locals.error = req.flash("error");
     res.locals.success = req.flash("success");
     res.locals.warning = req.flash("warning");

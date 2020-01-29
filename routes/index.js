@@ -58,6 +58,7 @@ router.post("/register", async function(req, res) {
       
     if (!loginResult.verified) {
         // Wallet sig verification failed, set error response and finish.
+        console.log(`Invalid wallet, cant register`);
         req.flash("error", 'Invalid wallet');
         return res.render("register");
     }
@@ -66,16 +67,20 @@ router.post("/register", async function(req, res) {
     let findExistingUserName = await User.find({ username: req.body.username }).exec();
     if (findExistingUserName.length > 0) {
         // Already exists, set error response and finish
+        console.log(`Username already exists, cant register`);
         req.flash("error", 'Username already exists');
-        return res.render("register");   
+        res.redirect("/register"); 
+        return;
     }
 
     // Check for existence of a user with that wallet already. 
     let findExistingWallet = await User.find({ arwallet: loginResult.arwallet }).exec();
     if (findExistingWallet.length > 0) {
         // Already exists, set error response and finish
+        console.log(`Wallet already exists, cant register`);
         req.flash("error", 'Wallet already exists');
-        return res.render("register");
+        res.redirect("/register");
+        return;
     }
 
     var newUser = new User({username: req.body.username, 
@@ -110,15 +115,33 @@ router.get("/login", function(req, res){
 });
 
 //HANDLE LOGIC
-router.post("/login", function(req, res) { 
-    passport.authenticate('ar-custom', 
-        { 
-            successRedirect: '/profile',
-            failureRedirect: '/login',
-            failureFlash: true 
-        }
-    )
-})
+router.post("/login", function(req, res, next) {
+    
+    // For some reason we can't just use the regular authenticate 
+    // { success, failture } and have to implement this logic ourselves 
+    // this is just copy pasted from:  http://www.passportjs.org/docs/authenticate/ 
+    // the bottom example with some modifications to flash the error message and 
+    // redirects etc.
+
+    passport.authenticate('ar-custom', function(err, user, info) {
+      if (err) { 
+          console.log(err);
+          console.log('AUTH ERR:')
+          req.flash("error", err);
+          return res.redirect('/login');
+      }
+      if (!user) { 
+          req.flash("error", "Unable to login");
+          return res.redirect('/login'); 
+      }
+      req.logIn(user, function(err) {
+        if (err) { return next(err); }
+        return res.redirect('/profile');
+      });
+
+    })(req, res, next);
+
+  });
 
 // LOG OUT ROUTE
 router.get("/logout", function(req, res){
