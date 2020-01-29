@@ -9,18 +9,23 @@
     <h5 style="text-align: center; margin: 30px;">Access your account now.</h5>
     <div style="width: 30%; margin: 25px auto;">
         <form action="/login" method="POST" class="form">
-            <div class='form-group'>
-                <input name='username' type='text' placeholder='Username' class='form-control'>
+            
+            <div class=form-group>
+                    <!-- This is just for display purposes, it will not be sent to the server. The onclick just clicks the file input -->
+                    <input id="formWalletAddress" style="font-size: 0.7em" onclick="clickOpenFile()" readonly type="text" placeholder="Arweave Wallet" class="button form-control" required>
+            </div>  
+            <div class="form-group">
+                    <input type="file">
             </div>
-            <div id="target" class='form-group'>
 
-            </div>
+            <!-- Hidden fields that will be filled in when the wallet file loaded -->
+            <input type="hidden" id="formPublicKey" name="public_key">
+            <input type="hidden" id="formSignature" name="signature">
+            
             <div class="form-group">
-                <input type="file">
+                <button class="button">Login</button>
             </div>
-            <div class="form-group">
-                <button class="button">Submit</button>
-            </div>
+            
         </form>
     </div>
 
@@ -29,19 +34,45 @@
     </div>
     <script>
 
-        target = document.querySelector("#target")
+        function clickOpenFile() {
+            document.querySelector('input[type="file"]').click();
+        }
+
         const input = document.querySelector('input[type="file"]')
         input.addEventListener('change', function (e) {
             console.log(input.files)
             const reader = new FileReader()
-            reader.onload = function () {
+            reader.onload = async function () {
                 keyfile = JSON.parse(reader.result)
-                qi = keyfile["qi"]
-                console.log(qi)
-                $("#target").append('<div class="form-group"> <input name="password" type="text" value="' + qi + '" class="form-control"></div>');
+                // Get signature / public_key / address
+                const login = await generateArWalletSignature(keyfile);
+                // Set the hidden form values, and set the display box 
+                // to show the wallet address.
+                document.querySelector('#formPublicKey').value = login.public_key;
+                document.querySelector('#formSignature').value = login.signature;
+                document.querySelector('#formWalletAddress').value = login.address;
             }
             reader.readAsText(input.files[0])
         }, false)
+
+        async function generateArWalletSignature(wallet) {
+
+            var arweave = Arweave.init({ host: 'arweave.net', port: 443, https: true });
+
+            var arwallet = await arweave.wallets.jwkToAddress(wallet);
+
+            // Convert the wallet address string into bytes so we can sign it. 
+
+            var arwalletAsBytes = arweave.utils.stringToBuffer(arwallet);
+
+            // Signature is always returned as bytes, we encode it a base64url string 
+            // afterwards so we can transfer to server as JSON easily. 
+            var signatureAsBytes = await arweave.crypto.sign(wallet, arwalletAsBytes);
+
+            var signature = arweave.utils.bufferTob64Url(signatureAsBytes);
+
+            return { public_key: wallet.n, signature, address: arwallet };
+        }
     </script>
 
     <% include partials/footer %>
