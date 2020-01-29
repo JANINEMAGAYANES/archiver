@@ -110,12 +110,15 @@ router.get("/login", function(req, res){
 });
 
 //HANDLE LOGIC
-router.post("/login", passport.authenticate("ar-custom", 
-{
-    successRedirect: "/profile",
-    failureRedirect: "/login"
-}), function(req, res) {
-});
+router.post("/login", function(req, res) { 
+    passport.authenticate('ar-custom', 
+        { 
+            successRedirect: '/profile',
+            failureRedirect: '/login',
+            failureFlash: true 
+        }
+    )
+})
 
 // LOG OUT ROUTE
 router.get("/logout", function(req, res){
