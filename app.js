@@ -4,7 +4,6 @@ var express = require("express"),
     mongoose = require("mongoose"),
     flash = require("connect-flash"),
     passport = require("passport"),
-    LocalStrategy = require("passport-local"),
     methodOverride = require("method-override"),
     Archiver = require("./models/archiver"),
     Transaction = require("./models/transaction"),
@@ -13,7 +12,9 @@ var express = require("express"),
     User = require("./models/user"),
     Reward = require("./models/reward"),
     Whitelist = require("./models/whitelist"),
-    Arweave = require('arweave/node')
+    Arweave = require('arweave/node'),
+    passportMongooseAr = require('./middleware/passport-mongoose-ar')
+
 
 const instance = Arweave.init({
     host: 'arweave.net',
@@ -48,14 +49,21 @@ app.use(require("express-session")({
     resave: false,
     saveUninitialized: false
 }));
+
 app.use(passport.initialize());
 app.use(passport.session());
-passport.use(new LocalStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+
+// Use our custom strategy and serialize/de-serialize routines.
+// We give the strategy a name 'ar-custom' and we should use that
+// elsewhere with passport.
+passport.use('ar-custom', passportMongooseAr.authenticateByWallet); 
+passport.serializeUser(passportMongooseAr.serializeUser);
+passport.deserializeUser(passportMongooseAr.deserializeUser);
 
 app.use(function (req, res, next) {
     res.locals.currentUser = req.user;
+    console.log(req.user);
+    console.log('^^ USER IS ^^');
     res.locals.error = req.flash("error");
     res.locals.success = req.flash("success");
     res.locals.warning = req.flash("warning");

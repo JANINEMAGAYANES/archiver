@@ -20,8 +20,7 @@
     "multer": "^1.4.2",
     "nodemon": "^1.19.4",
     "passport": "^0.4.0",
-    "passport-local": "^1.0.0",
-    "passport-local-mongoose": "^5.0.1",
+    "passport-custom": "^1.1.0",
     "request": "^2.88.0",
     "xlsx": "^0.15.1"
   },

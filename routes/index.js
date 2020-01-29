@@ -6,6 +6,7 @@ var Archiver= require("../models/archiver");
 var Duplicate = require("../models/duplicate");
 var Blacklist = require("../models/blacklist");
 
+var verifyArWalletSignature = require('../middleware/ar-wallet-auth').verifyArWalletSignature
 
 //ROOT ROUTE
 router.get("/", function(req, res){
@@ -49,31 +50,63 @@ router.get("/register", function(req, res){
 });
 
 //SIGN UP LOGIC
-router.post("/register", function(req, res){
+router.post("/register", async function(req, res) {
+
+    var public_key = req.body.public_key;
+    var signature = req.body.signature;
+    var loginResult = await verifyArWalletSignature({ public_key, signature });
+      
+    if (!loginResult.verified) {
+        // Wallet sig verification failed, set error response and finish.
+        console.log(`Invalid wallet, cant register`);
+        req.flash("error", 'Invalid wallet');
+        return res.render("register");
+    }
+
+    // Check for existence of a user with that username already. 
+    let findExistingUserName = await User.find({ username: req.body.username }).exec();
+    if (findExistingUserName.length > 0) {
+        // Already exists, set error response and finish
+        console.log(`Username already exists, cant register`);
+        req.flash("error", 'Username already exists');
+        res.redirect("/register"); 
+        return;
+    }
+
+    // Check for existence of a user with that wallet already. 
+    let findExistingWallet = await User.find({ arwallet: loginResult.arwallet }).exec();
+    if (findExistingWallet.length > 0) {
+        // Already exists, set error response and finish
+        console.log(`Wallet already exists, cant register`);
+        req.flash("error", 'Wallet already exists');
+        res.redirect("/register");
+        return;
+    }
+
     var newUser = new User({username: req.body.username, 
         name: req.body.name,
         email: req.body.email, 
         ethadd: req.body.ethadd, 
-        arwallet: req.body.arwallet, 
+        arwallet: loginResult.arwallet, 
         description: req.body.description, 
         referral: req.body.referral, 
-        refadd: req.body.refadd, 
+        refadd: req.body.refadd,
         pmtmode: req.body.pmtmode, 
-        notes:req.body.notes, 
+        notes:req.body.notes,
         discordun: req.body.discordun, 
         balance: req.body.balance, 
         author: req.body.author });
 
-    User.register(newUser, req.body.password, function(err, user){
-        if(err){
-            req.flash("error", err.message);
-            return res.render("register");      
-        }
-        passport.authenticate("local")(req, res, function(){
-            req.flash("success", "Welcome to Arweave " + user.username + "!");
-            res.redirect("/profile"); 
-        });
-    });
+    const saveUserResult = await newUser.save();
+    console.log(`Saved new user, username: ${saveUserResult.username}, address: ${saveUserResult.arwallet}`);
+    
+    passport.authenticate('ar-custom')(req, res, function(){
+        console.log('AUTHENTICATED');
+        req.flash("success", `Welcome to Arweave ${newUser.username} (${newUser.arwallet}) !`);
+        res.redirect("/profile"); 
+        return;
+    })
+    
 });
 
 //SHOW LOGIN FORM
@@ -82,12 +115,33 @@ router.get("/login", function(req, res){
 });
 
 //HANDLE LOGIC
-router.post("/login", passport.authenticate("local", 
-{
-    successRedirect: "/profile",
-    failureRedirect: "/login"
-}), function(req, res){
-});
+router.post("/login", function(req, res, next) {
+    
+    // For some reason we can't just use the regular authenticate 
+    // { success, failture } and have to implement this logic ourselves 
+    // this is just copy pasted from:  http://www.passportjs.org/docs/authenticate/ 
+    // the bottom example with some modifications to flash the error message and 
+    // redirects etc.
+
+    passport.authenticate('ar-custom', function(err, user, info) {
+      if (err) { 
+          console.log(err);
+          console.log('AUTH ERR:')
+          req.flash("error", err);
+          return res.redirect('/login');
+      }
+      if (!user) { 
+          req.flash("error", "Unable to login");
+          return res.redirect('/login'); 
+      }
+      req.logIn(user, function(err) {
+        if (err) { return next(err); }
+        return res.redirect('/profile');
+      });
+
+    })(req, res, next);
+
+  });
 
 // LOG OUT ROUTE
 router.get("/logout", function(req, res){
